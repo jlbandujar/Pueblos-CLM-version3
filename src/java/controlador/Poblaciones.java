@@ -37,7 +37,7 @@ public class Poblaciones extends HttpServlet {
        
        provincias = new ArrayList<String>();
        provincias.add("Albacete");
-       provincias.add("CiudadReal");
+       provincias.add("Ciudad Real");
        provincias.add("Cuenca");
        provincias.add("Guadalajara");
        provincias.add("Toledo");
@@ -75,7 +75,14 @@ public class Poblaciones extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      
+      String provincia = request.getParameter("provincia");
+      String archivoprovincia = provincia.replace(" ", "");
+       ArrayList<String> pueblos = 
+  Utilidades.getPoblaciones(rutaFicheros.concat(File.separator).concat(archivoprovincia.concat(".txt")));
+       request.setAttribute("provincias", provincias);
+       request.setAttribute("provincia", provincia);
+       request.setAttribute("pueblos", pueblos);
+       request.getRequestDispatcher("pueblos.jsp").forward(request, response);
     }
 
     /**
